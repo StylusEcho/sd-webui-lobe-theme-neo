@@ -18,13 +18,13 @@ export default (token: Theme) => css`
         min-height: var(--button-lg-tool-height) !important;
         max-height: var(--button-lg-tool-height);
         padding: 0;
+        border: 1px solid ${token.colorBorderSecondary};
+        border-radius: ${token.borderRadius}px;
 
         font-size: var(--text-md);
         line-height: 1;
 
         background: ${token.colorFillSecondary};
-        border: 1px solid ${token.colorBorderSecondary};
-        border-radius: ${token.borderRadius}px;
 
         &:hover {
           background: ${token.colorFill};
@@ -46,15 +46,15 @@ export default (token: Theme) => css`
       }
 
       &.secondary {
-        font-weight: 500;
-        background: ${token.colorFillTertiary};
         border: 1px solid ${token.colorBorderSecondary};
         border-radius: ${token.borderRadius}px !important;
+        font-weight: 500;
+        background: ${token.colorFillTertiary};
 
         &:hover {
+          border-color: ${token.colorBorder};
           color: ${token.colorText};
           background: ${token.colorFill};
-          border-color: ${token.colorBorder};
         }
       }
 
@@ -75,27 +75,34 @@ export default (token: Theme) => css`
         max-height: var(--button-lg-height) !important;
       }
 
-      &[id$='_interrupt'] {
+      /*
+        Forge Neo added a third generate-box state: after clicking Interrupt it
+        swaps in an "Interrupting..." button (#{tab}_interrupting) that occupies
+        the same slot. [id$='_interrupt'] does not match it, so it needs to be
+        listed explicitly or it renders unstyled mid-generation.
+      */
+      &[id$='_interrupt'],
+      &[id$='_interrupting'] {
         min-width: 0;
-
-        color: var(--button-cancel-text-color) !important;
-
-        background: ${token.colorError} !important;
         border: 1px solid ${token.colorError};
         border-right: none !important;
         border-radius: ${token.borderRadius}px 0 0 ${token.borderRadius}px !important;
 
+        color: var(--button-cancel-text-color) !important;
+
+        background: ${token.colorError} !important;
+
         &:hover,
         &:active {
-          background: ${token.colorErrorHover} !important;
           border: 1px solid ${token.colorErrorHover};
+          background: ${token.colorErrorHover} !important;
         }
       }
 
       &[id$='_skip'] {
         min-width: 0;
-        background: ${token.colorBorderSecondary} !important;
         border-radius: 0 ${token.borderRadius}px ${token.borderRadius}px 0 !important;
+        background: ${token.colorBorderSecondary} !important;
 
         &:hover,
         &:active {

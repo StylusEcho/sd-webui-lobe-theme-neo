@@ -10,6 +10,14 @@ export const useStyles = createStyles(
         display: none;
       }
 
+      /*
+        Legacy WebUI exposed one search box per tab (#txt2img_extra_search).
+        Forge Neo namespaces it per extra-network page instead
+        (#txt2img_lora_extra_search, #txt2img_checkpoints_extra_search, ...),
+        so match on the suffix to cover both. Safe to leave unscoped by tab:
+        this whole block is already scoped to the sidebar body.
+      */
+      [id$='_extra_search'],
       #txt2img_extra_search,
       #img2img_extra_search {
         width: 100% !important;
@@ -22,9 +30,15 @@ export const useStyles = createStyles(
 
       #txt2img-extra-network-sidebar,
       #img2img-extra-network-sidebar {
+        /*
+          Forge Neo replaced the single #{tab}_extra_sort dropdown with a row of
+          per-page sort toggles (_extra_sort_path / _name / _date_created /
+          _date_modified) plus a direction toggle (_extra_sort_dir).
+        */
         button.lg.secondary.gradio-button,
         #txt2img_extra_sort,
-        #img2img_extra_sort {
+        #img2img_extra_sort,
+        [id*='_extra_sort'] {
           height: 34px !important;
           min-height: 34px !important;
         }
@@ -50,7 +64,6 @@ export const useStyles = createStyles(
 
         max-height: 100%;
         padding: 16px;
-
         border: unset !important;
 
         .name {
@@ -132,9 +145,9 @@ export const useStyles = createStyles(
               flex: none;
 
               height: 32px;
+              border-radius: ${token.borderRadius}px;
 
               background: ${token.colorFillTertiary};
-              border-radius: ${token.borderRadius}px;
             }
           }
         }
@@ -213,10 +226,10 @@ export const useStyles = createStyles(
           width: 100% !important;
           height: ${size * 1.5}px !important;
           margin: 0 !important;
-
-          background-size: cover;
           border: 1px solid ${token.colorBorderSecondary};
           border-radius: ${token.borderRadiusSM}px;
+
+          background-size: cover;
           outline: none;
 
           transition:
@@ -249,8 +262,8 @@ export const useStyles = createStyles(
 
         .button-row {
           padding: 0 4px;
-          background: rgba(0, 0, 0, 50%);
           border-bottom-left-radius: ${token.borderRadius}px;
+          background: rgba(0, 0, 0, 50%);
 
           > div {
             font-size: var(--text-md) !important;
@@ -265,11 +278,20 @@ export const useStyles = createStyles(
         }
       }
 
+      /*
+        Legacy WebUI wrapped the pages in #{tab}_extra_networks. Forge Neo drops
+        that wrapper and puts the pages straight into #{tab}_extra_tabs, which is
+        also the element this sidebar injects against (useInjectExtraNetwork).
+      */
       div#txt2img_extra_networks,
-      div#img2img_extra_networks {
+      div#img2img_extra_networks,
+      div#txt2img_extra_tabs,
+      div#img2img_extra_tabs {
         display: block !important;
 
-        .tabitem.gradio-tabitem.svelte-19hvt5v {
+        /* Gradio's svelte-* hashes change on every release; match on the stable
+           classes only so this keeps working across Gradio bumps. */
+        .tabitem.gradio-tabitem {
           padding: 0 !important;
           background: transparent;
         }
