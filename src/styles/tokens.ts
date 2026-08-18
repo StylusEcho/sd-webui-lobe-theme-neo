@@ -91,7 +91,8 @@ export default (token: Theme) => {
       --block-label-border-color: ${token.colorBorderSecondary};
       --block-label-border-width: 1px;
       --block-label-shadow: ${token.boxShadowTertiary};
-      --block-label-text-color: ${token.colorText} --block-label-margin: 0;
+      --block-label-text-color: ${token.colorText};
+      --block-label-margin: 0;
       --block-label-padding: var(--spacing-sm) var(--spacing-lg);
       --block-label-radius: ${token.borderRadius}px;
       --block-label-right-radius: ${token.borderRadius}px;
