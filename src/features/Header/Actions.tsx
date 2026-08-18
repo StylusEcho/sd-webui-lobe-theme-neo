@@ -1,7 +1,8 @@
+import { SiGithub } from '@icons-pack/react-simple-icons';
 import { ActionIcon } from '@lobehub/ui';
 import { Space } from 'antd';
 import { useResponsive } from 'antd-style';
-import { Github, LayoutGrid, LucideIcon, Moon, Settings, Sun } from 'lucide-react';
+import { LayoutGrid, LucideIcon, Moon, Settings, Sun } from 'lucide-react';
 import qs from 'query-string';
 import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -50,7 +51,7 @@ const Actions = memo<ActionsProps>(() => {
               <ActionIcon icon={LayoutGrid} title="Cheat Sheet" />
             </a>
             <ActionIcon
-              icon={Github}
+              icon={SiGithub as any}
               onClick={() => setIsModalOpen(true)}
               title={t('header.feedback')}
             />

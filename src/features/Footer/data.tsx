@@ -1,5 +1,6 @@
+import { SiGithub } from '@icons-pack/react-simple-icons';
 import { Icon } from '@lobehub/ui';
-import { Bug, FileClock, GitFork, Github, Heart } from 'lucide-react';
+import { Bug, FileClock, GitFork, Heart } from 'lucide-react';
 
 import { GITHUB_REPO_URL } from '@/const/url';
 
@@ -38,7 +39,7 @@ export const Resources = [
 
 export const Community = [
   {
-    icon: <Icon icon={Github} size="small" />,
+    icon: <Icon icon={SiGithub as any} size="small" />,
     openExternal: true,
     title: 'GitHub',
     url: GITHUB_REPO_URL,

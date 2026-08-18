@@ -1,3 +1,4 @@
+import { SiGithub } from '@icons-pack/react-simple-icons';
 import {
   DiscordIcon,
   Giscus as G,
@@ -9,7 +10,7 @@ import {
 import { Button } from 'antd';
 import { useTheme } from 'antd-style';
 import isEqual from 'fast-deep-equal';
-import { Github, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Center, Flexbox } from 'react-layout-kit';
@@ -56,7 +57,7 @@ const Giscus = memo<GiscusProps>(({ open, onCancel }) => {
               </Button>
             </a>
             <a href={GITHUB_REPO_URL} rel="noreferrer" target="_blank">
-              <Button icon={<Icon icon={Github} />} size={'large'}>
+              <Button icon={<Icon icon={SiGithub as any} />} size={'large'}>
                 Github
               </Button>
             </a>

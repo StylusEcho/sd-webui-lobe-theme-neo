@@ -5,8 +5,6 @@ import { memo, useEffect } from 'react';
 import StructuredData from '@/components/StructuredData';
 import PromptFormator from '@/features/PromptFormator';
 import '@/locales/config';
-import ImageInfo from '@/modules/ImageInfo/page';
-import PromptHighlight from '@/modules/PromptHighlight/page';
 import replaceIcon from '@/scripts/replaceIcon';
 import { selectors, useAppStore } from '@/store';
 import GlobalStyle from '@/styles';
@@ -29,8 +27,16 @@ const Index = memo(() => {
   });
 
   useEffect(() => {
-    if (setting.enableHighlight) PromptHighlight();
-    if (setting.enableImageInfo) ImageInfo();
+    // Lazy-load these features: PromptHighlight pulls in shiki + its inlined wasm
+    // grammar engine (~600KB), so keep it out of the initial bundle unless enabled.
+    if (setting.enableHighlight) {
+      import('@/modules/PromptHighlight/page').then(({ default: PromptHighlight }) =>
+        PromptHighlight(),
+      );
+    }
+    if (setting.enableImageInfo) {
+      import('@/modules/ImageInfo/page').then(({ default: ImageInfo }) => ImageInfo());
+    }
     if (setting.svgIcon) replaceIcon();
   }, []);
 
