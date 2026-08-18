@@ -1,4 +1,4 @@
-import{o as e,r as t,p as r,q as n,s as i,t as s,j as o,A as a,v as c,w as l,x as p,F as h,C as u,y as g}from"./main.js";import{S as d}from"./SyntaxHighlighter.js";
+import{o as e,r as t,p as r,q as n,s as i,t as s,j as o,A as a,v as c,w as l,x as p,F as h,C as u,y as g}from"./main.mjs";import{S as d}from"./SyntaxHighlighter.js";
 /**
  * @license lucide-react v1.31.0 - ISC
  *

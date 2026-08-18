@@ -25,7 +25,24 @@ export default defineConfig({
       output: {
         assetFileNames: `[name].[ext]`,
         chunkFileNames: `[name].js`,
-        entryFileNames: `[name].js`,
+        // The entry chunk is loaded by the WebUI as a plain <script src="...">,
+        // not <script type="module">. Splitting PromptHighlight/ImageInfo/InfoBox
+        // into lazily-imported chunks (see src/app/index.tsx and
+        // src/features/Share/PreviewInner.tsx) means those chunks now share
+        // helpers with the entry, so Rollup emits a top-level `export {...}` in
+        // it to hand those back — a syntax error in a non-module script, which
+        // fails completely silently there: the WebUI's own script.js loads fine
+        // beforehand, so no error surfaces beyond "Uncaught SyntaxError" on this
+        // one script tag, and the page just never mounts.
+        //
+        // The WebUI only special-cases loading by extension (see
+        // `javascript_html()` in modules/ui_gradio_extensions.py): any .mjs file
+        // in an extension's javascript/ folder gets `<script type="module">`
+        // instead of a plain <script>, which is exactly what this needs. Chunk
+        // files stay .js — they're only ever reached via dynamic import(), which
+        // always evaluates its target as a module regardless of file extension
+        // or how the importing script itself was loaded.
+        entryFileNames: `[name].mjs`,
       },
     },
   },
@@ -47,7 +64,7 @@ export default defineConfig({
     },
     !isProduction && {
       configureServer: (server) => {
-        server.middlewares.use(async(_request, res, next): Promise<void> => {
+        server.middlewares.use(async (_request, res, next): Promise<void> => {
           if (
             _request.originalUrl === '/dev' ||
             _request.originalUrl === '/dev?__theme=dark' ||
