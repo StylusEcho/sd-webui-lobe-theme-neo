@@ -21,7 +21,7 @@
   "license": "AGPL3",
   "author": "LobeHub <i@lobehub.com>",
   "sideEffects": false,
-  "main": "javascript/main.js",
+  "main": "javascript/main.mjs",
   "files": [
     "javascript"
   ],

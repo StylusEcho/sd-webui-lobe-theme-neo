@@ -5,6 +5,7 @@ import button from './components/button';
 import collapse from './components/collapse';
 import container from './components/container';
 import extensions from './components/extensions';
+import forgeNeo from './components/forgeNeo';
 import gallery from './components/gallery';
 import input from './components/input';
 import label from './components/label';
@@ -35,6 +36,9 @@ const GlobalStyle = createGlobalStyle(({ theme }) => [
   popup(theme),
   extensions(theme),
   lightboxModal(theme),
+  // Keep last before `mobile`: these target Forge Neo surfaces that the
+  // component styles above never knew about, and may need to win over them.
+  forgeNeo(theme),
   mobile(),
 ]);
 
