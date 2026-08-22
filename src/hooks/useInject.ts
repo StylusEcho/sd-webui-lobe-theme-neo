@@ -32,6 +32,23 @@ export const useInject = (
         } else {
           ref.current?.append(ele);
         }
+
+        // Gradio/Svelte components (esp. the multiselect Dropdown Forge Neo uses
+        // for things like "VAE / Text Encoder") measure their own layout via
+        // ResizeObserver against the parent they were originally mounted under.
+        // Reparenting them here with a raw `append` doesn't fire that observer
+        // reliably, so they can keep sizing/positioning themselves against a
+        // stale width until something else forces a real reflow (e.g. resizing
+        // the browser window) -- which is exactly the "arrow icon renders huge /
+        // click target is offset / layout is stuck until you resize" class of
+        // bug this caused. Nudge the browser to recompute on the next two
+        // frames, which is enough for ResizeObserver-driven components to
+        // re-measure against their new, correct parent.
+        requestAnimationFrame(() => {
+          window.dispatchEvent(new Event('resize'));
+          requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+        });
+
         setElement(ele);
         onSuccess?.(ele);
         isInject.current = true;
